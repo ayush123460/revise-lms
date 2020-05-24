@@ -58,7 +58,7 @@ class PagesController extends Controller
         ])
         ->get('http://localhost:8001/api/user');
 
-        $u = (object) $res2->json()['user'];
+        $u = (object) $res2['user'];
 
         try {
             $user = User::findOrFail($u->uuid);
@@ -78,7 +78,7 @@ class PagesController extends Controller
         $user->email = $u->email != $user->email ? $u->email : $user->email;
         $user->save();
 
-        session()->put('details', (object) $res2->json()['details']);
+        session()->put('details', (object) $res2['details']);
 
         Auth::login($user);
 
@@ -87,10 +87,11 @@ class PagesController extends Controller
 
     public function logout()
     {
-        Http::withHeaders([
+        $r = Http::withHeaders([
             'Authorization' => 'Bearer ' . session()->get('token')
         ])
         ->get('http://localhost:8001/api/logout');
+
         Auth::logout();
         session()->flush();
         return redirect()->route('login');

@@ -38,6 +38,14 @@ Route::middleware('auth')->get('home', [
     'as' => 'auth_home'
 ]);
 
-// Route::prefix('/home')->middleware('auth')->group(function() {
-//     Route::get();
-// });
+Route::prefix('/classes')->middleware('auth')->group(function() {
+    Route::get('create', [
+        'uses' => 'HomeController@create_class',
+        'as' => 'create_class'
+    ]);
+
+    Route::post('create', [
+        'uses' => 'CoursesController@create',
+        'as' => 'course_create'
+    ]);
+});

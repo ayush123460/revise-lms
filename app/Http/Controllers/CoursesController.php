@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Courses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class CoursesController extends Controller
 {
@@ -22,9 +25,28 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $v = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'grade' => 'required'
+        ]);
+
+        if($v->fails()) {
+            return back()->with('err', 'Please enter all fields.');
+        }
+
+        Courses::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'grade' => $request->grade,
+            'academic_year' => Carbon::now()->year,
+            'code' => Str::random(6),
+            'teacher_id' => auth()->user()->id
+        ]);
+
+        return redirect()->route('auth_home');
     }
 
     /**

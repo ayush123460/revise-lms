@@ -3,3 +3,16 @@
 @tailwind components;
 
 @tailwind utilities;
+
+
+.input-group {
+    @apply my-3 flex w-3/5 justify-between items-center;
+}
+
+.input {
+    @apply p-2 text-gray-800 border border-gray-200 rounded-sm;
+
+    &:focus {
+        @apply border-gray-400;
+    }
+}

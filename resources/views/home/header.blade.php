@@ -7,14 +7,14 @@
     <title>@yield('title') - Revise</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" >
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-200">
     
-    <header class="bg-white shadow">
+    <header class="bg-white">
         <div class="h-20 container mx-auto flex justify-between items-center">
             <h1 class="text-xl font-semibold text-gray-900">Revise</h1>
             <span class="flex px-4">
                 Welcome, {{ auth()->user()->fname }} |&nbsp;
-                <a class="text-gray-700 hover:text-blue-500" href="{{ route('logout') }}">Logout</a>
+                <a class="text-blue-600 hover:text-blue-300" href="{{ route('logout') }}">Logout</a>
             </span>
         </div>
     </header>
