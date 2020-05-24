@@ -21,7 +21,7 @@ class CreateChaptersTable extends Migration
             $table->uuid('syllabus_id');
             $table->foreign('syllabus_id')
                 ->references('id')
-                ->on('syllabus');
+                ->on('syllabi');
             $table->timestamps();
         });
     }

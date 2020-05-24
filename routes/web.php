@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,39 +13,31 @@ use Illuminate\Support\Str;
 |
 */
 
-// Route::get('/redirect', function (Request $request) {
-//     $request->session()->put('state', $state = Str::random(40));
+Route::get('/', [
+    'uses' => 'PagesController@index',
+    'as' => 'login'
+]);
 
-//     $query = http_build_query([
-//         'client_id' => '90a03d7d-dfd5-404d-97a4-215a6e721630',
-//         'redirect_uri' => 'http://localhost:8000/auth/callback',
-//         'response_type' => 'code',
-//         'scope' => '',
-//         'state' => $state,
-//     ]);
+Route::get('login', [
+    'uses' => 'PagesController@login',
+    'as' => 'doLogin'
+]);
 
-//     return redirect('http://localhost:8001/oauth/authorize?'.$query);
-// });
+Route::get('logout', [
+    'uses' => 'PagesController@logout',
+    'as' => 'logout'
+])->middleware('auth');
 
-// Route::get('/auth/callback', function (Request $request) {
-//     $state = $request->session()->pull('state');
+Route::get('auth/callback', [
+    'uses' => 'PagesController@callback',
+    'as' => 'callback'
+]);
 
-//     throw_unless(
-//         strlen($state) > 0 && $state === $request->state,
-//         InvalidArgumentException::class
-//     );
+Route::middleware('auth')->get('home', [
+    'uses' => 'HomeController@index',
+    'as' => 'auth_home'
+]);
 
-//     $http = new GuzzleHttp\Client;
-
-//     $response = $http->post('http://your-app.com/oauth/token', [
-//         'form_params' => [
-//             'grant_type' => 'authorization_code',
-//             'client_id' => 'client-id',
-//             'client_secret' => 'client-secret',
-//             'redirect_uri' => 'http://example.com/callback',
-//             'code' => $request->code,
-//         ],
-//     ]);
-
-//     return json_decode((string) $response->getBody(), true);
+// Route::prefix('/home')->middleware('auth')->group(function() {
+//     Route::get();
 // });
