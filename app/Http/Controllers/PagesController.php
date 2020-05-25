@@ -23,13 +23,13 @@ class PagesController extends Controller
 
         $query = http_build_query([
             'client_id' => env('REVISE_APP_ID'),
-            'redirect_uri' => 'http://localhost:8000/auth/callback',
+            'redirect_uri' => env('APP_URL') . '/auth/callback',
             'response_type' => 'code',
             'scope' => '*',
             'state' => $state,
         ]);
 
-        return redirect('http://localhost:8001/oauth/authorize?' . $query);
+        return redirect(env('REVISE_AUTH_URL') . '/oauth/authorize?' . $query);
     }
 
     public function callback(Request $request)
@@ -41,11 +41,11 @@ class PagesController extends Controller
             \InvalidArgumentException::class
         );
 
-        $res = Http::post('http://localhost:8001/oauth/token', [
+        $res = Http::post(env('REVISE_AUTH_URL') . '/oauth/token', [
             'grant_type' => 'authorization_code',
             'client_id' => env('REVISE_APP_ID'),
             'client_secret' => env('REVISE_APP_SECRET'),
-            'redirect_uri' => 'http://localhost:8000/auth/callback',
+            'redirect_uri' => env('APP_URL') . '/auth/callback',
             'code' => $request->code,
         ]);
 
@@ -56,7 +56,7 @@ class PagesController extends Controller
         $res2 = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
         ])
-        ->get('http://localhost:8001/api/user');
+        ->get(env('REVISE_AUTH_URL') . '/api/user');
 
         $u = (object) $res2['user'];
 
@@ -90,7 +90,7 @@ class PagesController extends Controller
         $r = Http::withHeaders([
             'Authorization' => 'Bearer ' . session()->get('token')
         ])
-        ->get('http://localhost:8001/api/logout');
+        ->get(env('REVISE_AUTH_URL') . '/api/logout');
 
         Auth::logout();
         session()->flush();

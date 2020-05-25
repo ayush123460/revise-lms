@@ -22,11 +22,11 @@ class CoursesController extends Controller
     public function index(Courses $course)
     {
         $course = $course->first();
-
+        
         $res = Http::withHeaders([
             'Authorization' => 'Bearer ' . session()->get('token')
         ])
-        ->post('http://localhost:8001/api/teacher', [
+        ->post(env('REVISE_AUTH_URL') . 'api/teacher', [
             'id' => $course->teacher_id
         ]);
 
