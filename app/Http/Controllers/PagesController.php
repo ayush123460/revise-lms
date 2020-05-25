@@ -23,7 +23,7 @@ class PagesController extends Controller
 
         $query = http_build_query([
             'client_id' => env('REVISE_APP_ID'),
-            'redirect_uri' => env('APP_URL') . '/auth/callback',
+            'redirect_uri' => 'http://localhost:8000/auth/callback',
             'response_type' => 'code',
             'scope' => '*',
             'state' => $state,
@@ -45,7 +45,7 @@ class PagesController extends Controller
             'grant_type' => 'authorization_code',
             'client_id' => env('REVISE_APP_ID'),
             'client_secret' => env('REVISE_APP_SECRET'),
-            'redirect_uri' => env('APP_URL') . '/auth/callback',
+            'redirect_uri' => 'http://localhost:8000/auth/callback',
             'code' => $request->code,
         ]);
 
