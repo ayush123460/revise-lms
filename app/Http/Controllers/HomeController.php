@@ -24,15 +24,17 @@ class HomeController extends Controller
                 $db = DB::table('courses_students')
                         ->where('student_id', auth()->user()->id)
                         ->pluck('course_id');
+                $indexes = $db->toArray();
                 if($db->count() > 0)
-                    $c = Courses::find($db)->where('active', '1')->get();
-                else 
+                    $c = Courses::findMany($indexes);
+                else
                     $c = $db;
             break;
         }
 
         return view('home.home', [
-            'c' => $c
+            'c' => $c,
+            'err' => session()->get('err') ?? null
         ]);
     }
 

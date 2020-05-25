@@ -29,11 +29,21 @@
         
         <div class="w-full h-16 bg-white min-h-0 rounded flex justify-center items-center">
     
+            @if(auth()->user()->role == 'teacher')
+            
             <a class="text-blue-600 hover:text-blue-300" href="" onclick="showPost()">Share something with your class...</a>
+
+            @else
+
+            <a class="text-blue-600 hover:text-blue-300" href="" onclick="showPost()">Ask a question or share something...</a>
+
+            @endif
     
         </div>
 
         @if($p->count() == 0)
+
+        @if(auth()->user()->role == 'teacher')
 
         <div class="w-1/2 border border-gray-500 border-4 rounded mt-5 px-4 py-6">
 
@@ -50,10 +60,14 @@
                 <svg viewbox="0 0 24 24" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
                     <path d="M12 1c-6.338 0-12 4.226-12 10.007 0 2.05.739 4.063 2.047 5.625l-1.993 6.368 6.946-3c1.705.439 3.334.641 4.864.641 7.174 0 12.136-4.439 12.136-9.634 0-5.812-5.701-10.007-12-10.007zm0 1c6.065 0 11 4.041 11 9.007 0 4.922-4.787 8.634-11.136 8.634-1.881 0-3.401-.299-4.946-.695l-5.258 2.271 1.505-4.808c-1.308-1.564-2.165-3.128-2.165-5.402 0-4.966 4.935-9.007 11-9.007zm-5 7.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm5 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5zm5 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5.672-1.5 1.5-1.5z"/>
                 </svg>
+
                 <span class="ml-2">Interact and reply to them</span>
+
             </div>
 
         </div>
+
+        @endif
 
 
         @endif

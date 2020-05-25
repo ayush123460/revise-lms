@@ -26,7 +26,7 @@ class CoursesController extends Controller
         $res = Http::withHeaders([
             'Authorization' => 'Bearer ' . session()->get('token')
         ])
-        ->post(env('REVISE_AUTH_URL') . 'api/teacher', [
+        ->post(env('REVISE_AUTH_URL') . '/api/teacher', [
             'id' => $course->teacher_id
         ]);
 
@@ -77,59 +77,33 @@ class CoursesController extends Controller
         return redirect()->route('auth_home');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function join(Request $request)
     {
-        //
-    }
+        if(auth()->user()->role == 'student') {
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Courses  $courses
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Courses $courses)
-    {
-        //
-    }
+            $code = $request->code;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Courses  $courses
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Courses $courses)
-    {
-        //
-    }
+            $c = Courses::where('code', $code)->where('active', 1)->first();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Courses  $courses
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Courses $courses)
-    {
-        //
-    }
+            if($c != null) {
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Courses  $courses
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Courses $courses)
-    {
-        //
+                DB::table('courses_students')->insert([
+                    'course_id' => $c->id,
+                    'student_id' => auth()->user()->id
+                ]);
+
+                return route('course_view', $code);
+
+            } else {
+
+                return back()->with('err', 'This class does not exist or is no longer available to join.');
+
+            }
+
+        } else {
+
+            return back()->with('err', 'You are not allowed to join as student.');
+
+        }
     }
 }

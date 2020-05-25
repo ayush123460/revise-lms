@@ -78,8 +78,6 @@ class PagesController extends Controller
         $user->email = $u->email != $user->email ? $u->email : $user->email;
         $user->save();
 
-        session()->put('details', (object) $res2['details']);
-
         Auth::login($user);
 
         return redirect()->intended('/home');

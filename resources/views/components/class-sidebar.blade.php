@@ -6,7 +6,15 @@
 
         @if($s->count() == 0)
 
-        <a class="block mt-5 text-blue-600 hover:text-blue-300" href="">Click here to add chapters</a>
+            @if(auth()->user()->role == 'teacher')
+
+            <a class="block mt-5 text-blue-600 hover:text-blue-300" href="">Click here to add chapters</a>
+
+            @else
+
+            There is nothing here.
+
+            @endif
 
         @else
 
@@ -22,7 +30,15 @@
 
         @if($m->count() == 0)
 
-        <a class="block mt-5 text-blue-600 hover:text-blue-300" href="">Click here to upload material</a>
+            @if(auth()->user()->role == 'teacher')
+            
+            <a class="block mt-5 text-blue-600 hover:text-blue-300" href="">Click here to upload material</a>
+
+            @else
+
+            There is nothing here.
+
+            @endif
 
         @else
 
@@ -44,7 +60,17 @@
 
         @else
 
-        hola!
+        <ul class="list-disc">
+
+            @foreach($st as $student)
+
+            <li>{{ $student->fname . " " . $student->lname }}</li>
+
+            @endforeach
+
+        </ul>
+
+
 
         @endif
 

@@ -55,4 +55,9 @@ Route::prefix('/classes')->middleware('auth')->group(function() {
         'uses' => 'CoursesController@create',
         'as' => 'course_create'
     ]);
+
+    Route::post('join', [
+        'uses' => 'CoursesController@join',
+        'as' => 'course_join'
+    ]);
 });
