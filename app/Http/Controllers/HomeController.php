@@ -18,13 +18,16 @@ class HomeController extends Controller
                 $c = null;
             break;
             case 'teacher':
-                $c = Courses::where('teacher_id', auth()->user()->id)->get();
+                $c = Courses::where('teacher_id', auth()->user()->id)->where('active', '1')->get();
             break;
             case 'student':
                 $db = DB::table('courses_students')
                         ->where('student_id', auth()->user()->id)
                         ->pluck('course_id');
-                $c = Courses::find($db);
+                if($db->count() > 0)
+                    $c = Courses::find($db)->where('active', '1')->get();
+                else 
+                    $c = $db;
             break;
         }
 

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="mt-10 px-4 py-6">
+<div class="mt-10 px-4 py-6 relative">
 
     @if(auth()->user()->role == 'admin')
 
@@ -33,7 +33,11 @@
         @if($c->count() == 0)
 
         <div class="text-center">
-            There are no classes. <a class="text-blue-600 hover:text-blue-300" href="">Join a class!</a>
+            There are no classes. <a class="text-blue-600 hover:text-blue-300" href="" onclick="showClass()">Join a class!</a>
+        </div>
+
+        <div class="overlay-box">
+            
         </div>
 
         @endif
@@ -41,5 +45,17 @@
     @endif
 
 </div>
+
+<script>
+
+function showClass() {
+    event.preventDefault();
+    document.querySelector('.overlay-box').style.display = "block";
+    setTimeout(function() {
+        document.querySelector('.overlay-box').style.opacity = "100";
+    }, 200);
+}
+
+</script>
 
 @endsection

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Courses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+
+use App\Courses;
+use App\User;
 
 class CoursesController extends Controller
 {
@@ -15,9 +19,33 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Courses $course)
     {
-        //
+        $course = $course->first();
+
+        $res = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session()->get('token')
+        ])
+        ->post('http://localhost:8001/api/teacher', [
+            'id' => $course->teacher_id
+        ]);
+
+        if(auth()->user()->role == 'teacher') {
+            $students = DB::table('courses_students')
+            ->where('course_id', $course->id)
+            ->pluck('student_id');
+
+            $st = User::find($students);
+        }
+
+        return view('home.class.view', [
+            'c' => $course,
+            's' => $course->syllabus(),
+            'p' => $course->posts(),
+            'm' => $course->material(),
+            't' => $res->json(),
+            'st' => $st ?? null
+        ]);
     }
 
     /**

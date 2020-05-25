@@ -13,16 +13,16 @@ class Courses extends Model
 
     public function syllabus()
     {
-        return $this->hasOne('App\Syllabus');
+        return $this->hasOne('App\Syllabus', 'course_id', 'id');
     }
 
     public function posts()
     {
-        return $this->hasMany('App\Posts');
+        return $this->hasMany('App\Posts', 'course_id', 'id');
     }
 
     public function material()
     {
-        return $this->hasMany('App\Material');
+        return $this->hasMany('App\Material', 'course_id', 'id');
     }
 }

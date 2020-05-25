@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Courses;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [
     'uses' => 'PagesController@index',
     'as' => 'login'
-]);
+])->middleware('guest');
 
 Route::get('login', [
     'uses' => 'PagesController@login',
@@ -39,6 +40,12 @@ Route::middleware('auth')->get('home', [
 ]);
 
 Route::prefix('/classes')->middleware('auth')->group(function() {
+
+    Route::get('{courses:code}', [
+        'uses' => 'CoursesController@index',
+        'as' => 'course_view'
+    ]);
+
     Route::get('create', [
         'uses' => 'HomeController@create_class',
         'as' => 'create_class'

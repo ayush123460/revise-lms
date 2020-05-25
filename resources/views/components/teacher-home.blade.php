@@ -9,7 +9,7 @@
 
     @foreach($courses as $c)
 
-    <a class="bg-white px-6 py-6 rounded flex justify-center items-center transition-shadow duration-200 hover:shadow-md" href="">
+    <a class="bg-white px-6 py-6 rounded flex justify-center items-center transition-shadow duration-200 hover:shadow-md" href="{{ route('course_view', $c->code) }}">
         {{ $c->name }}
     </a>
 

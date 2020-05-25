@@ -19069,6 +19069,17 @@ video {
   border-color: rgba(203, 213, 224, var(--border-opacity));
 }
 
+.overlay-box {
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  background: white;
+  top: 0;
+  left: 33%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: 0.2s linear;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;
