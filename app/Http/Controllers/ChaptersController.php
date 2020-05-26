@@ -41,7 +41,7 @@ class ChaptersController extends Controller
     public function complete(Request $request)
     {
 
-        $c = Chapters::find($request->chapter_id)->first();
+        $c = Chapters::where('id', $request->chapter_id)->first();
 
         if($c->completed == 0) {
 
