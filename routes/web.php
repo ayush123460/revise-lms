@@ -41,7 +41,7 @@ Route::middleware('auth')->get('home', [
 
 Route::prefix('/classes')->middleware('auth')->group(function() {
 
-    Route::get('class/{courses:code}', [
+    Route::get('class/{code}', [
         'uses' => 'CoursesController@index',
         'as' => 'course_view'
     ]);
@@ -69,5 +69,10 @@ Route::prefix('/classes')->middleware('auth')->group(function() {
     Route::post('chapter/complete', [
         'uses' => 'ChaptersController@complete',
         'as' => 'chapter_complete'
+    ]);
+
+    Route::post('material', [
+        'uses' => 'MaterialController@upload',
+        'as' => 'material_upload'
     ]);
 });

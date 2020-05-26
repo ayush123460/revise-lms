@@ -1,4 +1,4 @@
-<div class="overlay-box">
+<div class="overlay-box chapter-add">
 
     <h2 class="text-center my-4 text-gray-900 font-semibold text-lg">Add Chapter</h2>
 
@@ -34,17 +34,17 @@
 
 function showChapterAdd() {
     event.preventDefault();
-    document.querySelector('.overlay-box').style.display = "block";
+    document.querySelector('.chapter-add').style.display = "block";
     setTimeout(function() {
-        document.querySelector('.overlay-box').style.opacity = "100";
+        document.querySelector('.chapter-add').style.opacity = "100";
     }, 200);
 }
 
 function closeChapterAdd() {
     event.preventDefault();
-    document.querySelector('.overlay-box').style.opacity = "0";
+    document.querySelector('.chapter-add').style.opacity = "0";
     setTimeout(function() {
-        document.querySelector('.overlay-box').style.display = "none";
+        document.querySelector('.chapter-add').style.display = "none";
     }, 200);
 }
 

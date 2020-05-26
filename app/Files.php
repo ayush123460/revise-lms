@@ -13,6 +13,6 @@ class Files extends Model
 
     public function materials()
     {
-        return $this->hasMany('App\Materials');
+        return $this->hasMany('App\Material', 'id', 'file_id');
     }
 }

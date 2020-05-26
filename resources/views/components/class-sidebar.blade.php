@@ -4,7 +4,7 @@
         
         <h3 class="font-semibold">Syllabus</h3>
 
-        @if($s->count() == 0)
+        @if($s == null)
 
             @if(auth()->user()->role == 'teacher')
 
@@ -76,7 +76,7 @@
 
             @if(auth()->user()->role == 'teacher')
             
-            <a class="block mt-5 text-blue-600 hover:text-blue-300" href="">Click here to upload material</a>
+            <a class="block mt-5 text-blue-600 hover:text-blue-300" href="" onclick="showUploadMaterial()">Click here to upload material</a>
 
             @else
 
@@ -86,9 +86,22 @@
 
         @else
 
-        hola!
+        @foreach($m as $material)
+
+        <a class="block my-2 text-blue-600 hover:text-blue-300" target="_blank" href="{{ $material->file->url }}">{{ $material->file->name }}</a>
+
+        @endforeach
+
+        @if(auth()->user()->role == 'teacher')
+            
+        <a class="block mt-5 text-blue-600 hover:text-blue-300" href="" onclick="showUploadMaterial()">Upload material</a>
 
         @endif
+
+        @endif
+
+
+        <x-material-upload :course="$course"></x-material-upload>
 
     </div>
 

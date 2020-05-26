@@ -13,7 +13,7 @@ class Material extends Model
 
     public function file()
     {
-        return $this->belongsTo('App\Files');
+        return $this->belongsTo('App\Files', 'file_id', 'id');
     }
 
     public function course()

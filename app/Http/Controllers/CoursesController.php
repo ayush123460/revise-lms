@@ -19,9 +19,13 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Courses $course)
+    public function index($code)
     {
-        $course = $course->first();
+        $course = Courses::where('code', $code)->first();
+
+        if(!$course) {
+            return redirect()->route('auth_home');
+        }
         
         $res = Http::withHeaders([
             'Authorization' => 'Bearer ' . session()->get('token')
@@ -38,11 +42,13 @@ class CoursesController extends Controller
             $st = User::find($students);
         }
 
+        // dd($course->syllabus()->count());
+
         return view('home.class.view', [
             'c' => $course,
-            's' => $course->syllabus()->get()->first()->chapters()->orderBy('created_at')->get(),
+            's' => $course->syllabus()->count() ? $course->syllabus()->get()->first()->chapters()->orderBy('created_at')->get() : null,
             'p' => $course->posts()->get(),
-            'm' => $course->material()->get(),
+            'm' => $course->material()->with('file')->get(),
             't' => $res->json(),
             'st' => $st ?? null
         ]);
