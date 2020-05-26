@@ -21,9 +21,15 @@
 
 </div>
 
-<div class="mt-5 flex justify-evenly">
+<div class="mt-5 flex justify-evenly relative">
 
-    <x-class-sidebar :s="$s" :m="$m" :st="$st"></x-class-sidebar>
+    <x-class-sidebar :course="$c->id" :s="$s" :m="$m" :st="$st"></x-class-sidebar>
+
+    @isset($msg)
+    <div class="my-3 py-2 px-4 text-green-500 border-2 border-green-400">
+        {{ $msg }}
+    </div>
+    @endisset
 
     <div class="flex flex-col w-8/12 items-center">
         

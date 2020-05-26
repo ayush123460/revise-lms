@@ -16,7 +16,6 @@ class CreateChaptersTable extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->text('description');
             $table->boolean('completed')->default(0);
             $table->uuid('syllabus_id');
             $table->foreign('syllabus_id')

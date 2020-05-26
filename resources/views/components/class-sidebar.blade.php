@@ -1,6 +1,6 @@
 <div class="w-3/12 flex flex-col">
         
-    <div class="w-60 px-4 py-6 bg-white border border-gray-300 rounded-lg text-center">
+    <div class="w-60 px-4 py-6 flex flex-col justify-evenly items-center bg-white rounded-lg text-center">
         
         <h3 class="font-semibold">Syllabus</h3>
 
@@ -8,7 +8,7 @@
 
             @if(auth()->user()->role == 'teacher')
 
-            <a class="block mt-5 text-blue-600 hover:text-blue-300" href="">Click here to add chapters</a>
+            <a class="block mt-5 text-blue-600 hover:text-blue-300" href="" onclick="showChapterAdd()">Click here to add chapters</a>
 
             @else
 
@@ -18,13 +18,57 @@
 
         @else
 
-        hola!
+        <ol class="list-decimal text-left">
+
+            @foreach($s as $chapter)
+
+            @if(auth()->user()->role == 'teacher')
+
+            <form method="POST" action="{{ route('chapter_complete') }}" id="{{ Str::slug($chapter->name) }}">
+
+                @csrf
+
+                @if($chapter->completed == '1')
+
+                <li><input type="checkbox" checked onclick="updateCompleted({{ "'" .  Str::slug($chapter->name) . "'" }})"> {{ $chapter->name }}</li>
+
+                @else
+
+                <li><input type="checkbox" onclick="updateCompleted({{ "'" . Str::slug($chapter->name) . "'" }})"> {{ $chapter->name }}</li>
+
+                @endif
+
+                <input type="hidden" name="chapter_id" value="{{ $chapter->id }}">
+                
+            </form>
+
+            @else
+
+            <li class="{{ $chapter->completed == '1' ? 'font-semibold' : '' }}">{{ $chapter->name }}</li>
+
+            @endif
+            
+            @endforeach
+
+        </ol>
+
+        @if(auth()->user()->role == 'teacher')
+
+        <a class="block mt-2 text-blue-600 hover:text-blue-300" href="" onclick="showChapterAdd()">Add chapter</a>
+
+        @else
+        
+        <div class="italic mt-2">Chapters in bold are marked as completed by the teacher.</div>
 
         @endif
 
+        @endif
+
+        <x-chapter-add :course="$course"></x-chapter-add>
+
     </div>
 
-    <div class="w-60 px-4 py-6 mt-5 bg-white border border-gray-300 rounded-lg text-center">
+    <div class="w-60 px-4 py-6 mt-5 bg-white rounded-lg text-center">
 
         <h3 class="font-semibold">Material</h3>
 
@@ -50,7 +94,7 @@
 
     @if(auth()->user()->role == 'teacher')
 
-    <div class="w-60 px-4 py-6 mt-5 bg-white border border-gray-300 rounded-lg text-center">
+    <div class="w-60 px-4 py-6 mt-5 bg-white rounded-lg text-center">
 
         <h3 class="font-semibold">Students</h3>
 
@@ -70,8 +114,6 @@
 
         </ul>
 
-
-
         @endif
 
     </div>
@@ -79,3 +121,15 @@
     @endif
 
 </div>
+
+<script>
+
+    function updateCompleted(id) {
+
+        console.log(id);
+
+        document.querySelector("form#" + id).submit();
+
+    }
+
+</script>

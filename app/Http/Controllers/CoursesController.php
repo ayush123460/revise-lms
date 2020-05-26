@@ -40,9 +40,9 @@ class CoursesController extends Controller
 
         return view('home.class.view', [
             'c' => $course,
-            's' => $course->syllabus(),
-            'p' => $course->posts(),
-            'm' => $course->material(),
+            's' => $course->syllabus()->get()->first()->chapters()->get(),
+            'p' => $course->posts()->get(),
+            'm' => $course->material()->get(),
             't' => $res->json(),
             'st' => $st ?? null
         ]);
@@ -92,7 +92,7 @@ class CoursesController extends Controller
                     'student_id' => auth()->user()->id
                 ]);
 
-                return route('course_view', $code);
+                return redirect()->route('course_view', $code);
 
             } else {
 

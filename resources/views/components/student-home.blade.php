@@ -2,7 +2,7 @@
 
 <h1 class="text-center font-semibold text-2xl">Your classes</h1>
 <div class="text-center mt-2">
-    <a class="inline-block px-4 py-2 bg-blue-600 text-white hover:bg-blue-300 rounded" href="{{ route('create_class') }}">+ Create New</a>
+    <a class="inline-block px-4 py-2 bg-blue-600 text-white hover:bg-blue-300 rounded" href="" onclick="showJoinClass()">Join</a>
 </div>
 
 <div class="flex flex-wrap">
