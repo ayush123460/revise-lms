@@ -21,7 +21,7 @@
 
 </div>
 
-<div class="mt-5 flex justify-evenly relative">
+<div class="my-5 flex justify-evenly relative">
 
     <x-class-sidebar :course="$c->id" :s="$s" :m="$m" :st="$st"></x-class-sidebar>
 

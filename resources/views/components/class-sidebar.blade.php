@@ -1,6 +1,6 @@
 <div class="w-3/12 flex flex-col">
         
-    <div class="w-60 px-4 py-6 flex flex-col justify-evenly items-center bg-white rounded-lg text-center">
+    <div class="w-60 h-full px-4 py-6 flex flex-col justify-evenly items-center bg-white rounded-lg text-center">
         
         <h3 class="font-semibold">Syllabus</h3>
 

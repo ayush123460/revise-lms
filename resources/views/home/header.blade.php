@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <title>@yield('title') - Revise</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" >
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-200 h-full">
     
     <header class="bg-white">
         <div class="h-20 container mx-auto flex justify-between items-center">
@@ -19,11 +19,11 @@
         </div>
     </header>
 
-    <div class="container mx-auto">
+    <div class="container mx-auto" style="min-height: calc(100vh - 220px);">
         @yield('content')
     </div>
 
-    <footer class="h-20 w-screen bg-gray-700 text-gray-500 flex justify-center items-center absolute bottom-0">
+    <footer style="height: 100px;" class="w-full bg-gray-700 text-gray-500 flex justify-center items-center">
         &copy; 2020 Team XForce.
     </footer>
 
