@@ -33,17 +33,29 @@
 
     <div class="flex flex-col w-8/12 items-center">
         
-        <div class="w-full h-16 bg-white min-h-0 rounded flex justify-center items-center">
+        <div class="w-full bg-white min-h-0 rounded flex justify-center items-center">
     
             @if(auth()->user()->role == 'teacher')
             
-            <a class="text-blue-600 hover:text-blue-300" href="" onclick="showPost()">Share something with your class...</a>
+            <a class="post-pre text-blue-600 px-4 py-6 hover:text-blue-300" href="" onclick="showPost()">Share something with your class...</a>
 
             @else
 
-            <a class="text-blue-600 hover:text-blue-300" href="" onclick="showPost()">Ask a question or share something...</a>
+            <a class="post-pre text-blue-600 px-4 py-6 hover:text-blue-300" href="" onclick="showPost()">Ask a question or share something...</a>
 
             @endif
+
+            <form id="post" method="POST" action="{{ route('post_create') }}" class="post flex flex-1 p-2 m-1" style="display: none; flex-direction=column;">
+                
+                @csrf
+
+                <textarea id="postarea" name="post" rows="5" class="w-full h-auto mb-2 border-0 border-b-2 focus:border-green-600 border-blue-600 text-gray-900" style="resize: none;" placeholder="Type here..."></textarea>
+
+                <input type="hidden" name="course_id" value="{{ $c->id }}">
+
+                <input type="submit" class="float-right w-32 py-2 text-center bg-blue-600 hover:bg-blue-400 active:border text-white cursor-pointer rounded" value="Post" onclick="checkPost()">
+
+            </form>
     
         </div>
 
@@ -75,11 +87,96 @@
 
         @endif
 
-
         @endif
+
+        @foreach($p as $post)
+
+        <div class="w-full mt-5 px-4 py-6 bg-white">
+            
+            <div class="font-semibold text-green-800 mb-1">{{ $post->user->fname . " " . $post->user->lname }}</div>
+
+            <div class="font-medium text-gray-700 mb-5">{{ $post->created_at->diffForHumans() }}</div>
+
+            {{ $post->content }}
+
+            <div class="w-3/5 mx-auto border-t-2 mt-5"></div>
+            
+            @foreach($post->comments as $comment)
+
+            <div class="w-3/5 mx-auto">
+            
+                <div class="font-semibold text-green-800 mb-1">{{ $comment->user->fname . " " . $comment->user->lname }}</div>
+    
+                <div class="font-medium text-gray-700 mb-2">{{ $comment->created_at->diffForHumans() }}</div>
+    
+                {{ $comment->content }}
+
+            </div>
+
+            <div class="w-3/5 mx-auto border-t-2 mt-2"></div>
+
+            @endforeach
+
+            <a class="mt-5 flex items-center text-gray-700 hover:text-green-600" class="pre-comment" href="" onclick="showComments({{ "'p-" .   $post->created_at->unix() . "'" }})">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M4 4v20h20v-20h-20zm18 18h-16v-13h16v13zm-3-3h-10v-1h10v1zm0-3h-10v-1h10v1zm0-3h-10v-1h10v1zm3-10h-19v19h-1v-20h20v1zm-2-2h-19v19h-1v-20h20v1z"/>
+                </svg>
+                <span class="ml-2">Comment</span>
+            </a>
+
+            <div class="comment" id="{{ 'p-' . $post->created_at->unix() }}" style="display: none;">
+                
+                <form id="{{ 'commentarea-' . $post->id . '-f' }}" method="POST" action="{{ route('comment_create') }}" class="comment flex flex-col flex-1 p-2 m-1">
+                
+                    @csrf
+    
+                    <textarea name="comment" id="commentarea-{{ $post->id }}" rows="3" class="w-full h-auto mb-2 border-0 border-b-2 focus:border-green-600 border-blue-600 text-gray-900" style="resize: none;" placeholder="Type here..."></textarea>
+    
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+    
+                    <input type="submit" class="float-right w-32 py-2 text-center bg-blue-600 hover:bg-blue-400 active:border text-white cursor-pointer rounded" value="Comment" onclick="checkPost( {{ "'commentarea-" . $post->id . "'" }})">
+    
+                </form>
+
+            </div>
+
+        </div>
+
+        @endforeach
     
     </div>
 
 </div>
 
 @endsection
+
+<script>
+
+    function showPost() {
+        event.preventDefault();
+        document.querySelector('.post-pre').style.display = 'none';
+        document.querySelector('.post').style.display = 'block';
+    }
+
+    function checkPost() {
+        event.preventDefault();
+        if(document.querySelector('#postarea').value)
+            document.querySelector('#post').submit();
+    }
+
+    function showComments(id) {
+        event.preventDefault();
+        let el = document.querySelector(`#${id}`);
+        if(el.style.display == 'block')
+            el.style.display = 'none';
+        else
+            el.style.display = 'block';
+    }
+
+    function checkPost(id) {
+        event.preventDefault();
+        if(document.querySelector(`#${id}`).value)
+            document.querySelector(`#${id}-f`).submit();
+    }
+
+</script>

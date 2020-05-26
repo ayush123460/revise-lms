@@ -44,10 +44,20 @@ class CoursesController extends Controller
 
         // dd($course->syllabus()->count());
 
+        $p = $course->posts()->with('comments')->orderBy('created_at', 'desc')->get();
+
+        foreach($p as $post) {
+            $post->user = User::where('id', $post->user_id)->first();
+
+            foreach($post->comments as $c) {
+                $c->user = User::where('id', $c->user_id)->first();
+            }
+        }
+
         return view('home.class.view', [
             'c' => $course,
             's' => $course->syllabus()->count() ? $course->syllabus()->get()->first()->chapters()->orderBy('created_at')->get() : null,
-            'p' => $course->posts()->get(),
+            'p' => $p,
             'm' => $course->material()->with('file')->get(),
             't' => $res->json(),
             'st' => $st ?? null

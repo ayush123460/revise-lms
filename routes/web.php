@@ -75,4 +75,14 @@ Route::prefix('/classes')->middleware('auth')->group(function() {
         'uses' => 'MaterialController@upload',
         'as' => 'material_upload'
     ]);
+
+    Route::post('post', [
+        'uses' => 'PostsController@create',
+        'as' => 'post_create'
+    ]);
+
+    Route::post('comment', [
+        'uses' => 'CommentsController@create',
+        'as' => 'comment_create'
+    ]);
 });
