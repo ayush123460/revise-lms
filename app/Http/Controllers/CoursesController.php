@@ -40,7 +40,7 @@ class CoursesController extends Controller
 
         return view('home.class.view', [
             'c' => $course,
-            's' => $course->syllabus()->get()->first()->chapters()->get(),
+            's' => $course->syllabus()->get()->first()->chapters()->orderBy('created_at')->get(),
             'p' => $course->posts()->get(),
             'm' => $course->material()->get(),
             't' => $res->json(),
