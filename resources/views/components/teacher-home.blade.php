@@ -3,8 +3,6 @@
     <a class="inline-block px-4 py-2 bg-blue-600 text-white hover:bg-blue-300 rounded" href="{{ route('create_class') }}">+ Create New</a>
 </div>
 
-@foreach($courses as $course)
-
 <div class="flex flex-wrap w-full">
 
     @foreach($courses as $c)
@@ -16,5 +14,3 @@
     @endforeach
 
 </div>
-
-@endforeach
