@@ -127,11 +127,16 @@ class CoursesController extends Controller
 
         $c = Courses::where('code', $code)->first();
 
-        $p = Posts::create([
-            'content' => "Online class for " . Carbon::now()->format('F j, Y') . " has started. Please join!",
-            'user_id' => auth()->user()->id,
-            'course_id' => $c->id,
-        ]);
+        if(auth()->user()->role == 'teacher') {
+            
+            $p = Posts::create([
+                'content' => "Online class for " . Carbon::now()->format('F j, Y') . " has started. Please join!",
+                'user_id' => auth()->user()->id,
+                'course_id' => $c->id,
+            ]);
+            
+        }
+
 
         return view('home.class.online', [
             'c' => $c

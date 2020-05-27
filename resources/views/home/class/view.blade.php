@@ -33,22 +33,28 @@
 
     <div class="flex flex-col w-8/12 items-center">
 
-        @if(auth()->user()->role == 'teacher')
-    
         <div class="w-full px-4 py-6 bg-white min-h-0 rounded">
-
+            
             <h2 class="font-semibold text-lg text-center">Class Tools</h2>
-
+            
             <div class="my-2 mx-auto flex w-3/5 justify-center items-center">
-
+                
+                @if(auth()->user()->role == 'teacher')
+                
                 <a class="px-4 py-2 text-center bg-blue-600 hover:bg-blue-400 active:border text-white cursor-pointer rounded" 
                 href="{{ route('course_online', $c->code) }}">Take Online Class</a>
+
+                @else
+
+                <a class="px-4 py-2 text-center bg-blue-600 hover:bg-blue-400 active:border text-white cursor-pointer rounded" 
+                href="{{ route('course_online', $c->code) }}">View Online Class</a>
+
+                @endif
 
             </div>
 
         </div>
 
-        @endif
         
         <div class="mt-5 w-full bg-white min-h-0 rounded flex justify-center items-center">
     
