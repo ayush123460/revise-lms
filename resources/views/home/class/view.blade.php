@@ -185,14 +185,14 @@
             document.querySelector('#post').submit();
     }
 
-    // function showComments(id) {
-    //     event.preventDefault();
-    //     let el = document.querySelector(`#${id}`);
-    //     if(el.style.display == 'block')
-    //         el.style.display = 'none';
-    //     else
-    //         el.style.display = 'block';
-    // }
+    function showComments(id) {
+        event.preventDefault();
+        let el = document.querySelector(`#${id}`);
+        if(el.style.display == 'block')
+            el.style.display = 'none';
+        else
+            el.style.display = 'block';
+    }
 
     function checkComment(id) {
         event.preventDefault();
