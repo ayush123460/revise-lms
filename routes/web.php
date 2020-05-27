@@ -85,4 +85,9 @@ Route::prefix('/classes')->middleware('auth')->group(function() {
         'uses' => 'CommentsController@create',
         'as' => 'comment_create'
     ]);
+
+    Route::get('online/{code}', [
+        'uses' => 'CoursesController@online',
+        'as' => 'course_online'
+    ]);
 });

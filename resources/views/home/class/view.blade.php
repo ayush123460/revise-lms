@@ -32,8 +32,25 @@
     @endisset
 
     <div class="flex flex-col w-8/12 items-center">
+
+        @if(auth()->user()->role == 'teacher')
+    
+        <div class="w-full px-4 py-6 bg-white min-h-0 rounded">
+
+            <h2 class="font-semibold text-lg text-center">Class Tools</h2>
+
+            <div class="my-2 mx-auto flex w-3/5 justify-center items-center">
+
+                <a class="px-4 py-2 text-center bg-blue-600 hover:bg-blue-400 active:border text-white cursor-pointer rounded" 
+                href="{{ route('course_online', $c->code) }}">Take Online Class</a>
+
+            </div>
+
+        </div>
+
+        @endif
         
-        <div class="w-full bg-white min-h-0 rounded flex justify-center items-center">
+        <div class="mt-5 w-full bg-white min-h-0 rounded flex justify-center items-center">
     
             @if(auth()->user()->role == 'teacher')
             
@@ -49,7 +66,7 @@
                 
                 @csrf
 
-                <textarea id="postarea" name="post" rows="5" class="w-full h-auto mb-2 border-0 border-b-2 focus:border-green-600 border-blue-600 text-gray-900" style="resize: none;" placeholder="Type here..."></textarea>
+                <textarea name="post" rows="5" class="postarea w-full h-auto mb-2 border-0 border-b-2 focus:border-green-600 border-blue-600 text-gray-900" style="resize: none;" placeholder="Type here..."></textarea>
 
                 <input type="hidden" name="course_id" value="{{ $c->id }}">
 
@@ -134,7 +151,7 @@
     
                     <input type="hidden" name="post_id" value="{{ $post->id }}">
     
-                    <input type="submit" class="float-right w-32 py-2 text-center bg-blue-600 hover:bg-blue-400 active:border text-white cursor-pointer rounded" value="Comment" onclick="checkPost( {{ "'commentarea-" . $post->id . "'" }})">
+                    <input type="submit" class="float-right w-32 py-2 text-center bg-blue-600 hover:bg-blue-400 active:border text-white cursor-pointer rounded" value="Comment" onclick="checkComment( {{ "'commentarea-" . $post->id . "'" }})">
     
                 </form>
 
@@ -160,20 +177,20 @@
 
     function checkPost() {
         event.preventDefault();
-        if(document.querySelector('#postarea').value)
+        if(document.querySelector('.postarea').value)
             document.querySelector('#post').submit();
     }
 
-    function showComments(id) {
-        event.preventDefault();
-        let el = document.querySelector(`#${id}`);
-        if(el.style.display == 'block')
-            el.style.display = 'none';
-        else
-            el.style.display = 'block';
-    }
+    // function showComments(id) {
+    //     event.preventDefault();
+    //     let el = document.querySelector(`#${id}`);
+    //     if(el.style.display == 'block')
+    //         el.style.display = 'none';
+    //     else
+    //         el.style.display = 'block';
+    // }
 
-    function checkPost(id) {
+    function checkComment(id) {
         event.preventDefault();
         if(document.querySelector(`#${id}`).value)
             document.querySelector(`#${id}-f`).submit();

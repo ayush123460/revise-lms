@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 
 use App\Courses;
 use App\User;
+use App\Posts;
 
 class CoursesController extends Controller
 {
@@ -41,8 +42,6 @@ class CoursesController extends Controller
 
             $st = User::find($students);
         }
-
-        // dd($course->syllabus()->count());
 
         $p = $course->posts()->with('comments')->orderBy('created_at', 'desc')->get();
 
@@ -121,5 +120,22 @@ class CoursesController extends Controller
             return back()->with('err', 'You are not allowed to join as student.');
 
         }
+    }
+
+    public function online($code)
+    {
+
+        $c = Courses::where('code', $code)->first();
+
+        $p = Posts::create([
+            'content' => "Online class for " . Carbon::now()->format('F j, Y') . " has started. Please join!",
+            'user_id' => auth()->user()->id,
+            'course_id' => $c->id,
+        ]);
+
+        return view('home.class.online', [
+            'c' => $c
+        ]);
+
     }
 }
