@@ -23,8 +23,6 @@
 
 <input type="hidden" class="user_email" value="{{ auth()->user()->email }}">
 
-@endsection
-
 <script src='https://meet.jit.si/external_api.js'></script>
 
 <script>
@@ -74,3 +72,5 @@
 
 
 </script>
+
+@endsection

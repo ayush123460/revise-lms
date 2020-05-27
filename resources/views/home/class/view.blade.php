@@ -171,8 +171,6 @@
 
 </div>
 
-@endsection
-
 <script>
 
     function showPost() {
@@ -203,3 +201,5 @@
     }
 
 </script>
+
+@endsection
